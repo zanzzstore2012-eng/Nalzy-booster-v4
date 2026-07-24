@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BOOSTER NALZY - Cyber Game Space</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #050203;
+            color: #ffffff;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CONTAINER UTAMA LAYAR HP */
+        .device-screen {
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* -------------------------------------------------------------
+           1. ANIMATION INTRO LOGO (ANIMASI PEMBUKA SNEAK/VIPER/CYBER)
+        ------------------------------------------------------------- */
+        #intro-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .logo-anime-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .cyber-snake-logo {
+            font-size: 90px;
+            color: #ff0044;
+            filter: drop-shadow(0 0 25px #ff0044);
+            animation: pulseGlow 1.2s infinite alternate;
+        }
+
+        .intro-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #fff;
+            margin-top: 15px;
+            text-shadow: 0 0 10px #ff0044;
+        }
+
+        .intro-sub {
+            font-size: 12px;
+            color: #ff3366;
+            letter-spacing: 2px;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); filter: drop-shadow(0 0 15px #ff0044); }
+            100% { transform: scale(1.08); filter: drop-shadow(0 0 35px #ff0044); }
+        }
+
+        /* -------------------------------------------------------------
+           2. GAMING LAUNCHER LANDSCAPE MODE (LAYAR MENGEMBANG)
+        ------------------------------------------------------------- */
+        #launcher-screen {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a050b 0%, #050203 100%);
+            position: relative;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 40px;
+        }
+
+        /* Top Bar Status */
+        .launcher-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .brand-corner-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .brand-corner-logo i { color: #ff0044; font-size: 28px; }
+
+        .system-stats-top {
+            display: flex;
+            gap: 30px;
+            font-size: 13px;
+            color: #a0a0a0;
+        }
+
+        .stat-box { text-align: center; }
+        .stat-box strong { display: block; font-size: 16px; color: #ff3366; }
+
+        /* Main Game Selector Area */
+        .game-carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            margin: 20px 0;
+        }
+
+        .game-card-active {
+            width: 260px;
+            height: 160px;
+            background: linear-gradient(135deg, rgba(255,0,68,0.2) 0%, rgba(20,5,10,0.8) 100%);
+            border: 2px solid #ff0044;
+            border-radius: 18px;
+            box-shadow: 0 0 30px rgba(255,0,68,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .game-card-active:hover { transform: scale(1.05); }
+
+        .game-card-active i { font-size: 50px; color: #ff0044; }
+        .game-card-active h3 { font-size: 20px; letter-spacing: 1px; color: #fff; }
+
+        /* Launch Button Vertical Side */
+        .btn-launch-landscape {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(180deg, #ff0044, #990026);
+            color: #fff;
+            border: none;
+            padding: 25px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 14px;
+            writing-mode: vertical-lr;
+            letter-spacing: 3px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,0,68,0.6);
+        }
+
+        /* Bottom Stats Bar */
+        .launcher-bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .ping-indicator { color: #00ffcc; font-weight: 700; }
+
+        /* -------------------------------------------------------------
+           3. POP-UP NOTIFIKASI MESIN GAME (PERTI DI VIDEO)
+        ------------------------------------------------------------- */
+        #toast-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(18, 10, 14, 0.95);
+            border: 1px solid #ff0044;
+            border-radius: 16px;
+            padding: 15px 25px;
+            width: 320px;
+            box-shadow: 0 0 25px rgba(255,0,68,0.5);
+            z-index: 20000;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            opacity: 0;
+        }
+
+        #toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-title {
+            color: #ff3366;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .toast-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            color: #ccc;
+            margin-bottom: 4px;
+        }
+
+        .toast-item i { color: #00ffcc; font-size: 12px; }
+
+        /* -------------------------------------------------------------
+           4. GAME OVERLAY HUB (SIDEBAR CONTROL DI DALAM GAME)
+        ------------------------------------------------------------- */
+        #game-overlay-hub {
+            position: fixed;
+            top: 0; left: -360px;
+            width: 340px; height: 100%;
+            background: rgba(12, 5, 8, 0.95);
+            border-right: 2px solid #ff0044;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            z-index: 15000;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: left 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        #game-overlay-hub.open { left: 0; }
+
+        .overlay-toggle-trigger {
+            position: absolute;
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px; height: 70px;
+            background: #ff0044;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 4px 0 15px rgba(255,0,68,0.5);
+        }
+
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .hub-btn {
+            background: #1c080e;
+            border: 1px solid #3d101c;
+            border-radius: 12px;
+            padding: 12px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .hub-btn:hover, .hub-btn.active {
+            border-color: #ff0044;
+            background: #330b16;
+        }
+
+        .hub-btn i { font-size: 18px; color: #ff3366; }
+        .hub-btn span { font-size: 10px; color: #aaa; text-align: center; }
+
+        /* VIRTUAL CROSSHAIR */
+        #virtual-crosshair {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+            pointer-events: none;
+        }
+
+        .ch-line { position: absolute; background: #00ffcc; box-shadow: 0 0 8px #00ffcc; }
+        .ch-v { width: 2px; height: 18px; top: -9px; left: -1px; }
+        .ch-h { width: 18px; height: 2px; top: -1px; left: -9px; }
+        .ch-d { width: 4px; height: 4px; background: #ff0044; border-radius: 50%; top: -2px; left: -2px; }
+
+        /* SIMULASI GAME RUNNING */
+        #game-viewport {
+            display: none;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop') center/cover;
+            position: relative;
+        }
+
+        .btn-exit-game {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(255,0,68,0.8);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. INTRO ANIMASI LOGO (VIPER / SNAKE CYBER) -->
+    <div id="intro-screen">
+        <div class="logo-anime-container">
+            <i class="fa-solid fa-staff-snake cyber-snake-logo"></i>
+            <div class="intro-title">BOOSTER NALZY</div>
+            <div class="intro-sub">POWERED BY GAME SPACE ENGINE</div>
+        </div>
+    </div>
+
+    <!-- 2. POP-UP TOAST NOTIFIKASI MESIN GAME -->
+    <div id="toast-notification">
+        <div class="toast-title">Mesin game diaktifkan</div>
+        <div class="toast-item"><i class="fa-solid fa-wifi"></i> Jaringan cerdas dua saluran aktif</div>
+        <div class="toast-item"><i class="fa-solid fa-gauge-high"></i> Mode seimbang aktif</div>
+        <div class="toast-item"><i class="fa-solid fa-bell-slash"></i> Semua notifikasi diblokir</div>
+        <div class="toast-item"><i class="fa-solid fa-memory"></i> Memori RAM dibebaskan</div>
+    </div>
+
+    <!-- CONTAINER UTAMA -->
+    <div class="device-screen">
+
+        <!-- LAUNCHER LANDSCAPE MODE (MENGEMBANG) -->
+        <div id="launcher-screen">
+            <button class="btn-launch-landscape" onclick="startAppGame('Free Fire')">LUNCURKAN</button>
+
+            <div class="launcher-top-bar">
+                <div class="brand-corner-logo">
+                    <i class="fa-solid fa-fire-flame-curved"></i> BOOSTER NALZY
+                </div>
+                <div class="system-stats-top">
+                    <div class="stat-box">
+                        <strong>36.0°C</strong>
+                        Suhu CPU
+                    </div>
+                    <div class="stat-box">
+                        <strong>2.80 GHz</strong>
+                        Kecepatan CPU
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-carousel">
+                <div class="game-card-active" onclick="startAppGame('Free Fire')">
+                    <i class="fa-solid fa-fire"></i>
+                    <h3>Free Fire</h3>
+                </div>
+            </div>
+
+            <div class="launcher-bottom-bar">
+                <div><span>STATUS BATERAI:</span> <strong style="color:#00ffcc;">85%</strong></div>
+                <div class="ping-indicator">▲ 41.5 ms (PING INTERVAL)</div>
+            </div>
+        </div>
+
+        <!-- SIMULASI GAME RUNNING -->
+        <div id="game-viewport">
+            <button class="btn-exit-game" onclick="exitAppGame()"><i class="fa-solid fa-power-off"></i> Keluar</button>
+
+            <!-- GAME OVERLAY HUB SIDEBAR -->
+            <div id="game-overlay-hub">
+                <div class="overlay-toggle-trigger" onclick="toggleOverlayHub()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+                <h3 style="color:#ff0044; margin-bottom: 5px;">GAME BOOSTER HUB</h3>
+                <p style="font-size:11px; color:#777;">Mode Performa: DYNAMIC</p>
+
+                <div class="hub-grid">
+                    <div class="hub-btn" onclick="toggleCrosshairOverlay()">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span>Crosshair</span>
+                    </div>
+                    <div class="hub-btn" onclick="triggerRamClean()">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Boost Cepat</span>
+                    </div>
+                    <div class="hub-btn" onclick="alert('Gyroscope Dikalibrasi!')">
+                        <i class="fa-solid fa-compass"></i>
+                        <span>Kalibrasi Gyro</span>
+                    </div>
+                    <div class="hub-btn" onclick="alert('Laju Penyegaran Diatur ke 120Hz')">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <span>Refresh Rate</span>
+                    </div>
+                    <div class="hub-btn" onclick="alert('Notifikasi Diblokir')">
+                        <i class="fa-solid fa-ban"></i>
+                        <span>Jangan Ganggu</span>
+                    </div>
+                    <div class="hub-btn" onclick="alert('Kunci Rotasi Aktif')">
+                        <i class="fa-solid fa-rotate"></i>
+                        <span>Kunci Rotasi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- VIRTUAL CROSSHAIR HUD -->
+    <div id="virtual-crosshair">
+        <div class="ch-line ch-v"></div>
+        <div class="ch-line ch-h"></div>
+        <div class="ch-line ch-d"></div>
+    </div>
+
+    <script>
+        // Auto Play Animated Intro Screener
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const intro = document.getElementById('intro-screen');
+                intro.style.opacity = '0';
+                setTimeout(() => intro.style.visibility = 'hidden', 800);
+            }, 2000);
+        });
+
+        // Launch Game Simulator
+        function startAppGame(gameName) {
+            document.getElementById('launcher-screen').style.display = 'none';
+            document.getElementById('game-viewport').style.display = 'block';
+
+            // Tampilkan Notifikasi Mesin Game seperti di Video
+            showGameEngineToast();
+        }
+
+        function exitAppGame() {
+            document.getElementById('game-viewport').style.display = 'none';
+            document.getElementById('launcher-screen').style.display = 'flex';
+            document.getElementById('game-overlay-hub').classList.remove('open');
+            document.getElementById('virtual-crosshair').style.display = 'none';
+        }
+
+        // Tampilkan Toast Notifikasi
+        function showGameEngineToast() {
+            const toast = document.getElementById('toast-notification');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // Toggle Sidebar Game Hub
+        function toggleOverlayHub() {
+            const hub = document.getElementById('game-overlay-hub');
+            hub.classList.toggle('open');
+        }
+
+        // Toggle Crosshair
+        let chActive = false;
+        function toggleCrosshairOverlay() {
+            chActive = !chActive;
+            document.getElementById('virtual-crosshair').style.display = chActive ? 'block' : 'none';
+            alert(chActive ? "Crosshair Pembidik Diaktifkan!" : "Crosshair Dinonaktifkan!");
+        }
+
+        // Clean RAM Boost
+        function triggerRamClean() {
+            alert("Memori RAM dibersihkan! Kinerja game meningkat.");
+        }
+    </script>
+</body>
+</html>
